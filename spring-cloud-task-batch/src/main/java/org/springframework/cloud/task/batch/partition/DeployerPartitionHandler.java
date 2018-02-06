@@ -17,6 +17,7 @@ package org.springframework.cloud.task.batch.partition;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class DeployerPartitionHandler implements PartitionHandler, EnvironmentAw
 
 	private Environment environment;
 
-	private Map<String, String> deploymentProperties;
+	private Map<String, String> deploymentProperties = new HashMap<>();
 
 	private EnvironmentVariablesProvider environmentVariablesProvider;
 
@@ -309,7 +310,7 @@ public class DeployerPartitionHandler implements PartitionHandler, EnvironmentAw
 		AppDefinition definition =
 				new AppDefinition(resolveApplicationName(),
 						environmentVariables);
-
+		this.deploymentProperties.put("spring.cloud.deployer.local.use-spring-application-json","true");
 		AppDeploymentRequest request =
 				new AppDeploymentRequest(definition,
 						this.resource,
